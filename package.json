@@ -1,0 +1,29 @@
+{
+  "name": "tampermonkey-starter",
+  "description": "tampermonkey starter",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "rollup -c rollup.config.ts --watch --environment NODE_ENV:development",
+    "build": "rollup -c rollup.config.ts"
+  },
+  "devDependencies": {
+    "@startracex/dev-config": "^0.5.0",
+    "@types/node": "^24.2.1",
+    "rollup": "^4.46.2",
+    "rollup-plugin-oxc": "^0.4.1",
+    "typescript": "^5.9.2"
+  },
+  "tampermonkey": {
+    "namespace": "http://tampermonkey.net/",
+    "match": "*://*/*",
+    "grant": "none"
+  },
+  "author": "startracex",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/startracex/tampermonkey-starter"
+  }
+}

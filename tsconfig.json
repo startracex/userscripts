@@ -1,0 +1,4 @@
+{
+  "extends": "@startracex/dev-config/tsconfig/app",
+  "include": ["src/**/*.ts", "rollup.config.ts"]
+}
