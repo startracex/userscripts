@@ -1,100 +1,79 @@
-import { createRequire } from "node:module";
-import { basename, resolve } from "node:path";
-import { pathToFileURL } from "node:url";
-import type { Plugin, RollupOptions } from "rollup";
+import { getPackages, type Package as manypkg_Packages } from "@manypkg/get-packages";
+import { buildMetaPlugin } from "@userscripts/shared/meta";
+import { join } from "path";
+import type { RollupOptions } from "rollup";
 import oxc from "rollup-plugin-oxc";
 
-const DEV_MODE = process.env.NODE_ENV === "development" || process.env.NODE_ENV === "test";
-
-const require = createRequire(import.meta.url);
-
-const pkgJson = require("./package.json");
-
-const meta = {
-  name: pkgJson.name,
-  description: pkgJson.description,
-  version: pkgJson.version,
-  author: pkgJson.author,
-  ...pkgJson.tampermonkey,
+type Package = manypkg_Packages & {
+  packageJson: Record<string, any>;
 };
 
-export default {
-  input: "src/index.ts",
-  output: {
-    file: "dist/output.js",
-    format: "iife",
-  },
-  plugins: [
-    oxc({
-      minify: !DEV_MODE,
-    }),
-    buildMetaPlugin({
-      meta,
-      name: "output.meta.js",
-      banner: DEV_MODE,
-      requireLocal: DEV_MODE,
-    }),
-  ],
-} satisfies RollupOptions;
+const DEV_MODE = process.env.NODE_ENV === "development";
+const outDir = "dist";
+const { packages } = await getPackages(".");
+const repo = "startracex/userscripts";
+const rawBase = `https://raw.githubusercontent.com/${repo}/release`;
 
-const userScriptRegExp = /^\/\/\s*==UserScript==/;
+const normalize = (path: string) => path.replaceAll("\\", "/");
 
-function buildMeta(options: Record<string, any>): string {
-  return `// ==UserScript==\n${Object.entries(options)
-    .map(([key, value]) =>
-      (Array.isArray(value) ? value : [value])
-        .map(
-          //
-          (v) => `// @${key.padEnd(13)}${v}\n`
-        )
-        .join("")
-    )
-    .join("")}// ==/UserScript==\n`;
-}
+const options = (packages as Package[])
+  .filter((p) => p.packageJson.tampermonkey)
+  .flatMap((p) => {
+    const input = join(p.relativeDir, "src/index.ts");
+    const name = p.packageJson.name.split("/").pop();
+    const rawBaseName = `${rawBase}/${name}`;
+    const dir = normalize(p.relativeDir);
+    const meta = {
+      name: `Shiro Wang's ${name} extension`,
+      description: p.packageJson.description,
+      version: p.packageJson.version,
+      author: p.packageJson.author,
+      license: p.packageJson.license,
+      updateURL: `${rawBaseName}.js`,
+      downloadURL: `${rawBaseName}.js`,
+      homepage: `https://github.com/${repo}/blob/main/${dir}`,
+      homepageURL: `https://github.com/${repo}/blob/main/${dir}/README.md`,
+      supportURL: `https://github.com/${repo}/issues`,
+      namespace: "http://github.com/startracex",
+      ...p.packageJson.tampermonkey,
+    };
+    return [
+      {
+        input,
+        output: {
+          file: join(outDir, `${name}.js`),
+          format: "iife",
+        },
+        plugins: [
+          oxc({ minify: !DEV_MODE }),
+          buildMetaPlugin({
+            name: `${name}.meta.js`,
+            meta,
+            banner: true,
+            requireLocal: DEV_MODE,
+          }),
+        ],
+      },
+      !DEV_MODE && {
+        input: input,
+        output: {
+          file: join(outDir, `${name}.dev.js`),
+          format: "iife",
+        },
+        plugins: [
+          oxc({ minify: false }),
+          buildMetaPlugin({
+            meta: {
+              ...meta,
+              updateURL: `${rawBaseName}.dev.js`,
+              downloadURL: `${rawBaseName}.dev.js`,
+            },
+            banner: true,
+          }),
+        ],
+      },
+    ] satisfies RollupOptions[];
+  })
+  .filter(Boolean);
 
-export function buildMetaPlugin({
-  name,
-  meta,
-  banner = true,
-  requireLocal,
-}: {
-  name?: string;
-  meta?: Record<string, any>;
-  banner?: boolean;
-  requireLocal?: boolean;
-} = {}): Plugin {
-  const cache = new Set<string>();
-  return {
-    name: "build-meta",
-
-    generateBundle({ file }, bundle) {
-      if (!file || cache.has(file)) {
-        return;
-      }
-      cache.add(file);
-
-      const base = basename(file);
-      if (banner) {
-        const chunk = bundle[base];
-        if (chunk?.type === "chunk" && !userScriptRegExp.test(chunk.code)) {
-          chunk.code = buildMeta(meta) + chunk.code;
-        }
-      }
-      if (!name) {
-        return;
-      }
-      const metaRequires = new Set(meta?.require);
-      if (requireLocal) {
-        metaRequires.add(pathToFileURL(resolve(file)));
-      }
-      this.emitFile({
-        type: "asset",
-        fileName: name,
-        source: buildMeta({
-          ...meta,
-          require: [...metaRequires],
-        }),
-      });
-    },
-  };
-}
+export default options;

@@ -1,4 +1,7 @@
 {
-  "extends": "@startracex/dev-config/tsconfig/app",
-  "include": ["src/**/*.ts", "rollup.config.ts"]
+  "extends": "@startracex/dev-config/tsconfig/lib",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["**/*.ts"]
 }

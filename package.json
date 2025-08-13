@@ -1,29 +1,33 @@
 {
-  "name": "tampermonkey-starter",
-  "description": "tampermonkey starter",
+  "name": "userscripts",
+  "description": "Shiro Wang's user scripts",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "rollup -c rollup.config.ts --watch --environment NODE_ENV:development",
-    "build": "rollup -c rollup.config.ts"
+    "build": "rollup -c rollup.config.ts",
+    "lint": "biome lint --fix",
+    "fmt": "dprint fmt",
+    "check": "dprint check && biome lint"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.1.4",
+    "@changesets/cli": "^2.29.5",
+    "@manypkg/get-packages": "^3.1.0",
     "@startracex/dev-config": "^0.5.0",
     "@types/node": "^24.2.1",
+    "@userscripts/shared": "workspace:*",
+    "dprint": "^0.50.1",
     "rollup": "^4.46.2",
     "rollup-plugin-oxc": "^0.4.1",
     "typescript": "^5.9.2"
-  },
-  "tampermonkey": {
-    "namespace": "http://tampermonkey.net/",
-    "match": "*://*/*",
-    "grant": "none"
   },
   "author": "startracex",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/startracex/tampermonkey-starter"
-  }
+    "url": "git+https://github.com/startracex/userscripts"
+  },
+  "packageManager": "pnpm@10.14.0"
 }
