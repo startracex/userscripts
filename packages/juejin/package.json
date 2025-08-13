@@ -1,6 +1,6 @@
 {
   "name": "@userscripts/juejin",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A user script to block ads/clickbait on Juejin.",
   "private": true,
   "type": "module",
