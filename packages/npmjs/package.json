@@ -1,0 +1,19 @@
+{
+  "name": "@userscripts/npmjs",
+  "version": "0.0.0",
+  "description": "A user script to display more install commands on npmjs.",
+  "private": true,
+  "type": "module",
+  "tampermonkey": {
+    "match": [
+      "https://www.npmjs.com/",
+      "https://www.npmjs.com/package/*"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/startracex/userscripts"
+  },
+  "author": "startracex",
+  "license": "MIT"
+}
