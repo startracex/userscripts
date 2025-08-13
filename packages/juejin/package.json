@@ -1,0 +1,20 @@
+{
+  "name": "@userscripts/juejin",
+  "version": "0.0.0",
+  "description": "A user script to block ads/clickbait on Juejin.",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@userscripts/shared": "workspace:*",
+    "emoji-regex": "^10.4.0"
+  },
+  "tampermonkey": {
+    "match": "https://juejin.cn/*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/startracex/userscripts"
+  },
+  "author": "startracex",
+  "license": "MIT"
+}

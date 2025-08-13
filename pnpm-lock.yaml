@@ -39,6 +39,15 @@ importers:
         specifier: ^5.9.2
         version: 5.9.2
 
+  packages/juejin:
+    dependencies:
+      '@userscripts/shared':
+        specifier: workspace:*
+        version: link:../shared
+      emoji-regex:
+        specifier: ^10.4.0
+        version: 10.4.0
+
   packages/npmjs: {}
 
   packages/shared: {}
@@ -729,6 +738,9 @@ packages:
   dprint@0.50.1:
     resolution: {integrity: sha512-s+kUyQp2rGpwsM3vVmXySOY3v1NjYyRpKfQZdP4rfNTz6zQuICSO6nqIXNm3YdK1MwNFR/EXSFMuE1YPuulhow==}
     hasBin: true
+
+  emoji-regex@10.4.0:
+    resolution: {integrity: sha512-EC+0oUMY1Rqm4O6LLrgjtYDvcVYTy7chDnM4Q7030tP4Kwj3u/pR6gP9ygnp2CJMK5Gq+9Q2oqmrFJAz01DXjw==}
 
   enquirer@2.4.1:
     resolution: {integrity: sha512-rRqJg/6gd538VHvR3PSrdRBb/1Vy2YfzHqzvbhGIQpDRKIa4FgV/54b5Q1xYSxOOwKvjXweS26E0Q+nAMwp2pQ==}
@@ -1615,6 +1627,8 @@ snapshots:
       '@dprint/linux-x64-musl': 0.50.1
       '@dprint/win32-arm64': 0.50.1
       '@dprint/win32-x64': 0.50.1
+
+  emoji-regex@10.4.0: {}
 
   enquirer@2.4.1:
     dependencies:
