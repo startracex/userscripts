@@ -1,6 +1,6 @@
 {
   "name": "@userscripts/npmjs",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A user script to display more install commands on npmjs.",
   "private": true,
   "type": "module",
