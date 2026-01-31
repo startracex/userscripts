@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "tampermonkey": {
-    "name": "Remove grayscale filter",
+    "name": "Remove black and white filter",
     "name:zh-CN": "清除黑白滤镜",
     "description": "Remove grayscale filter",
     "description:zh-CN": "清除 grayscale 滤镜",
