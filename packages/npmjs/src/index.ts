@@ -4,7 +4,7 @@ const converters = [
   (cmd: string) => cmd.replace("npm i", "yarn add"),
   (cmd: string) => cmd.replace("npm i", "bun add"),
   (cmd: string) => cmd.replace("npm i", "deno add"),
-  (cmd: string) => cmd.replace("npm i", "npx jsr add"),
+  (cmd: string) => cmd.replace("npm i", "npx jsr add npm:"),
 ];
 
 const expandInstallElements = () => {
