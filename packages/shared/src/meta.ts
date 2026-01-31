@@ -10,9 +10,9 @@ export const buildMeta = (options: Record<string, any>): string => {
       (Array.isArray(value) ? value : [value])
         .map(
           //
-          (v) => `// @${key.padEnd(13)}${v}\n`
+          (v) => `// @${key.padEnd(13)}${v}\n`,
         )
-        .join("")
+        .join(""),
     )
     .join("")}// ==/UserScript==\n`;
 };

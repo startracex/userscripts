@@ -5,8 +5,13 @@ interface LogFactoryOptions {
   logger?: (...data: any[]) => void;
 }
 
-// biome-ignore lint/suspicious/noConsole: _
-export const createLogFactory = ({ level, backgroundColor, textColor, logger = console.log }: LogFactoryOptions) => {
+export const createLogFactory = ({
+  level,
+  backgroundColor,
+  textColor,
+  // biome-ignore lint/suspicious/noConsole: _
+  logger = console.log,
+}: LogFactoryOptions) => {
   const prefixStyle = `background: ${backgroundColor}; color: ${textColor}; padding: 1px 4px; border-radius: 1px; font-weight: bold;`;
   const prefix = `${level}`;
 

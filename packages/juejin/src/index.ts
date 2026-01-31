@@ -44,7 +44,7 @@ const executeHide = (item: HTMLLIElement) => {
           });
           observer.observe(list, { childList: true });
         },
-        250
+        250,
       );
     },
   },
@@ -56,7 +56,7 @@ const executeHide = (item: HTMLLIElement) => {
         (list) => {
           [...list.children].forEach(executeHide);
         },
-        250
+        250,
       );
       const styleElement = document.createElement("style");
       styleElement.textContent = ".author-info-block + img { display:none !important }";
@@ -75,7 +75,7 @@ waitForQuery(
   (e) => {
     e.click();
   },
-  250
+  250,
 );
 
 const styleElement = document.createElement("style");
