@@ -4,7 +4,7 @@ const converters: ((cmd: string) => string)[] = [
   (cmd) => cmd.replace("npm", "pnpm"),
   (cmd) => cmd.replace("npm i", "yarn add"),
   (cmd) => cmd.replace("npm i", "bun add"),
-  (cmd) => cmd.replace("npm i", "deno add"),
+  (cmd) => cmd.replace("npm i ", "deno add npm:"),
   (cmd) => cmd.replace("npm i ", "npx jsr add npm:"),
 ];
 
