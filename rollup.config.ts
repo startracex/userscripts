@@ -25,6 +25,7 @@ const options = (packages as Package[])
     const rawBaseName = `${rawBase}/${name}`;
     const dir = normalize(p.relativeDir);
     const meta = {
+      version: p.packageJson.version,
       ...p.packageJson.tampermonkey,
       updateURL: `${rawBaseName}.js`,
       downloadURL: `${rawBaseName}.js`,
