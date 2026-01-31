@@ -5,12 +5,13 @@ import { pathToFileURL } from "url";
 const userScriptRegExp = /^\/\/\s*==UserScript==/;
 
 export const buildMeta = (options: Record<string, any>): string => {
+  const maxKeyLen = Math.max(...Object.keys(options).map((key) => key.length));
   return `// ==UserScript==\n${Object.entries(options)
     .map(([key, value]) =>
       (Array.isArray(value) ? value : [value])
         .map(
           //
-          (v) => `// @${key.padEnd(13)}${v}\n`,
+          (v) => `// @${key.padEnd(maxKeyLen + 2)}${v}\n`,
         )
         .join(""),
     )

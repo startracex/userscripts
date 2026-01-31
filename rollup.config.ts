@@ -11,6 +11,7 @@ type Package = manypkg_Packages & {
 const DEV_MODE = process.env.NODE_ENV === "development";
 const outDir = "dist";
 const { packages } = await getPackages(".");
+
 const repo = "startracex/userscripts";
 const rawBase = `https://raw.githubusercontent.com/${repo}/release`;
 
@@ -24,18 +25,13 @@ const options = (packages as Package[])
     const rawBaseName = `${rawBase}/${name}`;
     const dir = normalize(p.relativeDir);
     const meta = {
-      name: `Shiro Wang's ${name} extension`,
-      description: p.packageJson.description,
-      version: p.packageJson.version,
-      author: p.packageJson.author,
-      license: p.packageJson.license,
+      ...p.packageJson.tampermonkey,
       updateURL: `${rawBaseName}.js`,
       downloadURL: `${rawBaseName}.js`,
+      namespace: "https://github.com/startracex",
       homepage: `https://github.com/${repo}/blob/main/${dir}`,
       homepageURL: `https://github.com/${repo}/blob/main/${dir}/README.md`,
       supportURL: `https://github.com/${repo}/issues`,
-      namespace: "https://github.com/startracex",
-      ...p.packageJson.tampermonkey,
     };
     return [
       {
