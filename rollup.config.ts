@@ -27,6 +27,8 @@ const options = (packages as Package[])
     const meta = {
       version: p.packageJson.version,
       ...p.packageJson.tampermonkey,
+      author: p.packageJson.author,
+      license: p.packageJson.license,
       updateURL: `${rawBaseName}.js`,
       downloadURL: `${rawBaseName}.js`,
       namespace: "https://github.com/startracex",
