@@ -5,6 +5,10 @@
   "private": true,
   "type": "module",
   "tampermonkey": {
+    "name": "npmjs: more install commands",
+    "name:zh-CN": "npmjs: 更多安装命令",
+    "description": "Display more install commands on npmjs.",
+    "description:zh-CN": "为 npmjs 网站添加更多安装命令.",
     "match": [
       "https://www.npmjs.com/",
       "https://www.npmjs.com/package/*"
