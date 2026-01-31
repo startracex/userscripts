@@ -1,10 +1,11 @@
 const mainElement = document.querySelector("#main");
-const converters = [
-  (cmd: string) => cmd.replace("npm", "pnpm"),
-  (cmd: string) => cmd.replace("npm i", "yarn add"),
-  (cmd: string) => cmd.replace("npm i", "bun add"),
-  (cmd: string) => cmd.replace("npm i", "deno add"),
-  (cmd: string) => cmd.replace("npm i", "npx jsr add npm:"),
+const converters: ((cmd: string) => string)[] = [
+  (cmd) => cmd,
+  (cmd) => cmd.replace("npm", "pnpm"),
+  (cmd) => cmd.replace("npm i", "yarn add"),
+  (cmd) => cmd.replace("npm i", "bun add"),
+  (cmd) => cmd.replace("npm i", "deno add"),
+  (cmd) => cmd.replace("npm i ", "npx jsr add npm:"),
 ];
 
 const expandInstallElements = () => {
@@ -37,7 +38,7 @@ const expandInstallElements = () => {
     return element;
   });
 
-  installElement.after(...moreElements);
+  installElement.replaceWith(...moreElements);
 };
 
 if (mainElement) {
