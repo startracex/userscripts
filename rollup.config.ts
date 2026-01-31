@@ -38,34 +38,34 @@ const options = (packages as Package[])
       {
         input,
         output: {
-          file: join(outDir, `${name}.js`),
+          file: join(outDir, `${name}.min.js`),
           format: "iife",
         },
         plugins: [
-          oxc({ minify: !DEV_MODE }),
+          oxc({ minify: true }),
           buildMetaPlugin({
-            name: `${name}.meta.js`,
-            meta,
+            meta: {
+              ...meta,
+              updateURL: `${rawBaseName}.min.js`,
+              downloadURL: `${rawBaseName}.min.js`,
+            },
             banner: true,
-            requireLocal: DEV_MODE,
           }),
         ],
       },
-      !DEV_MODE && {
+      {
         input: input,
         output: {
-          file: join(outDir, `${name}.dev.js`),
+          file: join(outDir, `${name}.js`),
           format: "iife",
         },
         plugins: [
           oxc({ minify: false }),
           buildMetaPlugin({
-            meta: {
-              ...meta,
-              updateURL: `${rawBaseName}.dev.js`,
-              downloadURL: `${rawBaseName}.dev.js`,
-            },
+            name: `${name}.meta.js`,
+            meta,
             banner: true,
+            requireLocal: DEV_MODE,
           }),
         ],
       },
