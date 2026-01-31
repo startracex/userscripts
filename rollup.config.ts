@@ -34,7 +34,7 @@ const options = (packages as Package[])
       homepage: `https://github.com/${repo}/blob/main/${dir}`,
       homepageURL: `https://github.com/${repo}/blob/main/${dir}/README.md`,
       supportURL: `https://github.com/${repo}/issues`,
-      namespace: "http://github.com/startracex",
+      namespace: "https://github.com/startracex",
       ...p.packageJson.tampermonkey,
     };
     return [
