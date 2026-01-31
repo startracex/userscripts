@@ -21,19 +21,20 @@ const expandInstallElements = () => {
     const code = element.querySelector("code");
     code.textContent = convert(code.textContent);
     const button = element.querySelector("button");
-    button.addEventListener("click", async () => {
-      await navigator.clipboard.writeText(code.textContent);
-      const banner = document.createElement("div");
-      banner.className = "fixed top-0 pa3 ph5-ns tl z-999 w-100 flex flex-row justify-between";
-      banner.textContent = "copied to clipboard";
-      banner.style.borderBottom = "1px solid";
-      banner.style.backgroundColor = "var(--color-bg-success)";
-      banner.style.borderColor = "var(--color-border-success)";
-      banner.style.color = "var(--color-fg-success)";
-      document.body.appendChild(banner);
-      setTimeout(() => {
-        banner.remove();
-      }, 2000);
+    button.addEventListener("click", () => {
+      navigator.clipboard.writeText(code.textContent).then(() => {
+        const banner = document.createElement("div");
+        banner.className = "fixed top-0 pa3 ph5-ns tl z-999 w-100 flex flex-row justify-between";
+        banner.textContent = "copied to clipboard";
+        banner.style.borderBottom = "1px solid";
+        banner.style.backgroundColor = "var(--color-bg-success)";
+        banner.style.borderColor = "var(--color-border-success)";
+        banner.style.color = "var(--color-fg-success)";
+        document.body.appendChild(banner);
+        setTimeout(() => {
+          banner.remove();
+        }, 2000);
+      });
     });
     return element;
   });
